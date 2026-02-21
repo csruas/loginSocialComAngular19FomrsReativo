@@ -20,5 +20,33 @@
       "nome": "teste",
       "descricao": "test"
     }
+  ],
+  "lugares": [
+    {
+      "id": "1",
+      "nome": "Manga",
+      "descricao": "Restaurante de comida regional",
+      "categoriaId": "1"
+    },
+    {
+      "id": "2",
+      "nome": "Shopping Recife",
+      "descricao": "Shopping com varias lojas e praça de alimentação",
+      "categoriaId": "2"
+    },
+    {
+      "id": "3",
+      "nome": "Boa Viagem",
+      "descricao": "Praia urbana com calçadão e quiosques",
+      "categoriaId": "a1e1"
+    },
+    {
+      "id": "a284",
+      "nome": "Praia do Ze",
+      "categoria": "Praias",
+      "localizacao": "Brasília, DF, BR",
+      "urlFoto": "foto.img.jpg",
+      "avaliacao": "4"
+    }
   ]
 }

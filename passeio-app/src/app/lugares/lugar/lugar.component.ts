@@ -1,0 +1,56 @@
+import { LugarService } from './../lugar.service';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { CategoriaService} from './../../categorias/categoria.service';
+import { Categoria } from '../../categorias/categoria';
+
+@Component({
+  selector: 'app-lugar',
+  standalone: false,
+  templateUrl: './lugar.component.html',
+  styleUrl: './lugar.component.scss'
+})
+export class LugarComponent implements OnInit {
+  camposForm: FormGroup;
+  categorias: Categoria[] = [];
+
+  constructor( 
+      private categoriaService: CategoriaService,
+      private lugarService: LugarService
+    ) {
+     this.camposForm = new FormGroup({
+      nome: new FormControl('', Validators.required),
+      categoria: new FormControl('', Validators.required),
+      localizacao: new FormControl('', Validators.required),
+      urlFoto: new FormControl('', Validators.required),
+      avaliacao: new FormControl('', Validators.required)
+     });
+  }
+
+  ngOnInit(): void {
+    this.categoriaService.listarCategorias().subscribe({
+      next: (listaCategorias) => this.categorias = listaCategorias,
+      error: (erro) => console.error('Erro ao carregar categorias: ', erro)
+    });
+  }
+
+  salvar(){
+    this.camposForm.markAllAsTouched();
+    if(this.camposForm.valid){
+      this.lugarService.salvar(this.camposForm.value).subscribe({
+       next: (lugarSalvo) => {
+         console.log('Lugar salvo com sucesso: ', lugarSalvo);
+         this.camposForm.reset();
+       },
+       error: (erro) => console.error('Erro ao salvar lugar: ', erro)
+      });
+    }
+  }
+
+  isCampoInvalido(nomeCampo: string): boolean {
+    const campo = this.camposForm.get(nomeCampo);
+    return campo?.invalid && campo?.touched && campo?.errors?.['required'];
+  }
+
+}
